@@ -21,9 +21,9 @@ def make_font(name, size):
 
 
 menu_position = {
-    'chords': (12, 55, 53, 65),
-    'arp': (86, 55, 107, 66),
-    'random': (44, 119, 87, 128)
+    'chords': (12, 55, 49, 65),
+    'arp': (78, 55, 120, 66),
+    'random': (43, 119, 88, 128)
 }
 
 
@@ -44,3 +44,7 @@ def splash_screen(screen):
                   font=title, fill="white")
         draw.text((55, 112), text="v0.1   ", font=title, fill="white")
     time.sleep(2)
+    
+    
+def center_text_x(text):
+    return (128 - len(text)) / 2
