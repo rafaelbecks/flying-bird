@@ -1,4 +1,5 @@
 import mido
+import sys
 
 from musthe import *
 
@@ -50,7 +51,9 @@ base_notes = {
 'A#': 34,
 'Bb': 34,
 'A##': 35,
-'B': 35
+'B': 35,
+'B#': 36,
+'B##': 37
 }
 
 def note(note,velocity = 64):
@@ -86,3 +89,4 @@ def get_note(tonic, octave):
 def get_scale(tonic, mode):
     scale = Scale(Note(tonic), mode)
     return [str(scale[i]) for i in range(len(scale))]
+ 

@@ -46,5 +46,5 @@ def splash_screen(screen):
     time.sleep(2)
     
     
-def center_text_x(text):
-    return (128 - len(text)) / 2
+def center_text_x(text, size):
+    return (128 - (len(text) * size/2)) / 2

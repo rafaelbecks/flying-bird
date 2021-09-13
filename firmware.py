@@ -3,12 +3,11 @@
 
 import skywriter
 import signal
-
+from luma.core.render import canvas
 
 from screen_device import get_device
 from ui import icons, make_font, menu_position, color_selection, splash_screen, center_text_x
-from luma.core.render import canvas
-from midi import major, send_note, get_scale, available_scales, chromatic
+from midi import send_note, get_scale, available_scales, chromatic
 
 import math
 
@@ -100,8 +99,6 @@ def main_menu(screen, midi_device, **kwargs):
 
     return kwargs['selected']
   
-  
-
 
 def chord(screen, midi_device, **kwargs):
     icon = make_font("icomoon.ttf", 70)
@@ -164,16 +161,19 @@ def chord(screen, midi_device, **kwargs):
             velocity = 100 - math.floor( z * 100)
             kwargs['octave'] = math.floor( y * 4)
             send_note(scale[kwargs['note_index']],kwargs['octave'] + 1, velocity, port)
-            print('x:' + scale[kwargs['note_index']],' y:' + str(round(velocity,2)),' z:' + str(round(velocity,2)))
+            print('note:' + scale[kwargs['note_index']],' octave:' + str(kwargs['octave']),' velocity:' + str(round(velocity,2)))
     
     
     while kwargs['screen_active']:
       with canvas(screen) as draw:
-          current_scale = get_scale(chromatic[kwargs["current_note"]], available_scales[kwargs["current_scale"]]) 
-          draw.text((39, 8), text=chromatic[kwargs["current_note"]] + ':  '+current_scale[kwargs['note_index']]+ str(kwargs['octave']),font=menu_item, fill='white')
-          if(kwargs['midi_on']):
-              draw.text((29, 32), text=icons['chords'], font=icon, fill="white")
-          draw.text((15, 108), text=available_scales[kwargs["current_scale"]] + '   ',font=menu_item, fill='white')
+          scale = available_scales[kwargs["current_scale"]]
+          current_scale = get_scale(chromatic[kwargs["current_note"]], scale) 
+          
+          if(kwargs['note_index'] < len(current_scale)):
+            draw.text((center_text_x(chromatic[kwargs["current_note"]] + ':', 16) - 3, 8), text=chromatic[kwargs["current_note"]] + ':'+current_scale[kwargs['note_index']]+ str(kwargs['octave']),font=menu_item, fill='white')
+            draw.text((center_text_x(scale,16), 108), text=scale,font=menu_item, fill='white')
+            if(kwargs['midi_on']):
+                draw.text((29, 32), text=icons['chords'], font=icon, fill="white")
 
 modules = {
   0: chord,
