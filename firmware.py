@@ -1,17 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 import skywriter
 import signal
+import math
+import mido
 from luma.core.render import canvas
 
 from screen_device import get_device
 from ui import icons, make_font, menu_position, color_selection, splash_screen, center_text_x
 from midi import send_note, get_scale, available_scales, chromatic
-
-import math
-
-import mido
 
 def midi_device_selection(screen, **kwargs):
     kwargs["selected"] = 0
